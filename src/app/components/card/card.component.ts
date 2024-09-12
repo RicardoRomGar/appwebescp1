@@ -13,6 +13,10 @@ export class CardComponent {
   @Output()
   public deleteCard : EventEmitter<string> = new EventEmitter();
 
+  //Evento para enviar los datos de la serie seleccionada al formulario de edicion (que es el mismo para agregar)
+  @Output()
+  public editCard : EventEmitter<void> = new EventEmitter();
+
   @Input()
   public show : Show = {
     name: "",
@@ -35,5 +39,18 @@ export class CardComponent {
   public onDeleteCard() {
     //console.log("Programa " + this.show.name + " eliminado");
     this.deleteCard.emit(this.show.name);
+  }
+
+  public onEditCard() {
+    //console.log("Nuevos datos " + this.show);
+    this.editCard.emit();
+    this.scrollToTop();
+  }
+
+  scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 }

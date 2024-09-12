@@ -27,7 +27,7 @@
 
 
   <form [formGroup]="form" (ngSubmit)="createElement()" class="row g-2">
-    <h3>Agregar nueva Card</h3>
+    <h3> {{selectedShow ? "Editar serie" : "Agregar nueva serie" }} </h3>
     <div class="mb-3">
       <label class="form-label">Titulo</label>
       <input type="text" class="form-control" formControlName="name">
@@ -43,7 +43,7 @@
       <input type="text" class="form-control" formControlName="image">
     </div>
 
-    <button type="submit" class="btn btn-primary">Agregar</button>
+    <button type="submit" class="btn btn-primary"> {{selectedShow ? "Guardar cambios" : "Agregar" }} </button>
     
     <div *ngIf="isFormSubmmited && !form.valid" class="alert alert-danger" role="alert">
       Datos incompletos
@@ -51,9 +51,14 @@
   </form>
 
 
-  <h3 style="margin-top: 20px">Cards</h3>
-  <div class="container d-flex">
-    <app-card *ngFor="let show of shows" [show]="show" (deleteCard)="deleteElement($event)"></app-card>
+  <h3 style="margin-top: 20px">Series</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3" *ngFor="let show of shows">
+        <app-card [show]="show" (deleteCard)="deleteElement($event)" (editCard)="editElement(show)"></app-card>
+      </div>
+    </div>
   </div>
+
 </div>
   

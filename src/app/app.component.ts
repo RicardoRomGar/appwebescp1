@@ -179,28 +179,51 @@ export class AppComponent {
     })
   }
 
+  //Para almacenar la info del show que se va a editar
+  public selectedShow : Show | null = null;
+
   public deleteElement(name : string) : void {
     this.shows = this.shows.filter(show => show.name != name);
   }
 
+  //Agregue una parte de la logica de la edicion de los datos para reutilizar el formulario de Agregar datos.
   public createElement() : void {
     this.isFormSubmmited = true;
 
     if (this.form.valid) {
-      const newShow : Show = {
-        name: this.form.value.name,
-        year: 0,
-        episodes: 0,
-        image: this.form.value.image,
-        description: this.form.value.description,
-        genre: "",
-        likes: []
+      if (this.selectedShow !== null) {
+        //Actualiza los datos del show actualizado
+        this.selectedShow.name = this.form.value.name;
+        this.selectedShow.description = this.form.value.description;
+        this.selectedShow.image = this.form.value.image;
+        //La eleccion del show se limpia
+        this.selectedShow = null;
+      } else {
+        const newShow : Show = {
+          name: this.form.value.name,
+          year: 0,
+          episodes: 0,
+          image: this.form.value.image,
+          description: this.form.value.description,
+          genre: "",
+          likes: []
+        }
+        this.shows.push(newShow);
       }
-      this.shows.push(newShow);
+      
       this.form.reset();
       this.isFormSubmmited = false;
     } else {
       console.log("Faltan datos.");
     }
+  }
+
+  public editElement(show: Show): void {
+    this.selectedShow = show;
+    this.form.patchValue({
+      name: show.name,
+      image: show.image,
+      description: show.description
+    });
   }
 }

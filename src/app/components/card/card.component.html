@@ -1,9 +1,19 @@
 <div class="card" style="width: 18rem;" [ngClass]="{'selectedCard' : isSelected}">
     <img [src]="show.image" class="card-img-top" alt="...">
       <div class="card-body">
-        <p (click)="onDeleteCard()" style="float: right; cursor: pointer;">x</p>
-        <h5 class="card-title"> {{show.name}} </h5>
+        <div class="title-container">
+            <h5 class="card-title"> {{show.name}} </h5>
+            <p (click)="onDeleteCard()" class="delete-icon">x</p>
+        </div>
+        
         <p class="card-text"> {{show.description}} </p>
-        <button (click)="changeSelected()" href="" class="btn btn-primary"> {{ isSelected ? "Seleccionado" : "Seleccionar"}}</button>
+
+        <!--Botones de acciones-->
+        <div class="container d-flex justify-content-center">
+            <!--Boton para editar la serie, este activa el evento para enviar los datos al form-->
+            <button (click)="onEditCard(); scrollToTop()" href="" class="btn btn-success mx-2"> Editar </button>
+            <button (click)="changeSelected()" href="" class="btn btn-primary mx-2"> {{ isSelected ? "Seleccionado" : "Seleccionar"}}</button>
+        </div>
+        
       </div>
 </div>
